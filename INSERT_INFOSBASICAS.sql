@@ -75,3 +75,72 @@ INSERT INTO Consultas(DataHora, TipoConsulta, idStatusConsulta,
 VALUES(GETDATE(),1,1,'',1,4)
 
 SELECT * FROM Consultas
+
+SELECT * FROM Convenios
+INSERT INTO Convenios (NomeConvenio, CNPJ)
+VALUES('Unimed',123456789),('HapVida',987654321),('SulAmerica',456456456)
+
+UPDATE Convenios
+SET SiteConvenio = 'https://chatgpt.com'
+WHERE idConvenio = 3
+
+ALTER TABLE Convenios
+ALTER COLUMN SiteConvenio VARCHAR(50)
+
+INSERT INTO TelefonesConvenios
+VALUES(55,11,12345678,1),(55,71,56786578,2)
+
+
+SELECT * FROM Convenios
+SELECT * FROM TelefonesConvenios
+
+SELECT c.NomeConvenio, c.SiteConvenio, c.CNPJ, t.CodPais, 
+		t.CodArea, t.Numero,
+		e.Logradouro, e.Numero, e.Complemento, e.Bairro, e.Cidade, e.CEP
+FROM Convenios c
+RIGHT JOIN TelefonesConvenios t
+ON c.idConvenio = t.idConvenio
+RIGHT JOIN Enderecos e
+ON c.idEndereco = e.id
+
+SELECT c.NomeConvenio, c.SiteConvenio, c.CNPJ, t.CodPais, 
+		t.CodArea, t.Numero,
+		e.Logradouro, e.Numero, e.Complemento, e.Bairro, e.Cidade, e.CEP
+FROM Convenios c
+LEFT JOIN TelefonesConvenios t
+ON c.idConvenio = t.idConvenio
+LEFT JOIN Enderecos e
+ON c.idEndereco = e.id
+
+SELECT c.NomeConvenio, c.SiteConvenio, c.CNPJ, t.CodPais, 
+		t.CodArea, t.Numero,
+		e.Logradouro, e.Numero, e.Complemento, e.Bairro, e.Cidade, e.CEP
+FROM Convenios c
+JOIN TelefonesConvenios t
+ON c.idConvenio = t.idConvenio
+JOIN Enderecos e
+ON c.idEndereco = e.id
+
+SELECT * FROM Convenios
+SELECT * FROM Enderecos
+ALTER TABLE Convenios
+ADD idEndereco INT 
+
+ALTER TABLE Convenios
+ADD FOREIGN KEY (idEndereco) REFERENCES Enderecos(id)
+
+INSERT INTO Enderecos (Logradouro, Numero, Bairro, Cidade, CEP)
+VALUES('Avenida das Nações',1000,'Centro', 'São Paulo', 1023456)
+
+INSERT INTO Enderecos (Logradouro, Complemento, Bairro, Cidade, CEP)
+VALUES('Avenida Interlagos','Autodromo','Interlagos', 'São Paulo', 3456777)
+
+SELECT * FROM Enderecos
+SELECT * FROM TelefonesConvenios
+
+INSERT INTO TelefonesConvenios
+VALUES(55,31,9099999,3)
+
+UPDATE Convenios
+SET idEndereco = 6
+WHERE idConvenio = 3
