@@ -45,7 +45,7 @@ SELECT * FROM EspecialidadesMedicas
 SELECT * FROM MedicosEspecialidades
 
 INSERT INTO MedicosEspecialidades
-VALUES('10',4),(4,7)
+VALUES(4,4),(4,7)
 
 INSERT INTO TelefonesMedicos
 VALUES(55,16,12345678,4),(55,16,9876543,4)
@@ -144,3 +144,52 @@ VALUES(55,31,9099999,3)
 UPDATE Convenios
 SET idEndereco = 6
 WHERE idConvenio = 3
+
+SELECT * FROM MedicosEspecialidades
+
+DELETE FROM MedicosEspecialidades WHERE id < 5
+
+ALTER TABLE MedicosEspecialidades
+ADD CONSTRAINT UQ_MedicosEspecialidades UNIQUE (idMedico, idEspecialidade) 
+
+ALTER TABLE MedicosEspecialidades
+ADD CONSTRAINT PK_MedicosEspecialidades PRIMARY KEY (idMedico, idEspecialidade);
+
+SELECT * FROM Pacientes
+SELECT * FROM Enderecos
+
+INSERT INTO TelefonesPacientes
+VALUES(55,16,9876455,2)
+
+INSERT INTO Enderecos (Logradouro, Numero, Bairro, Cidade, CEP)
+VALUES('Avenida Paralela', 999, 'Jardim do Eden','Bebedouro', 123456)
+
+
+INSERT INTO Pacientes
+VALUES('Henrique','Rossin',45645567,'2002-04-09',9)
+
+SELECT p.Nome, p.Sobrenome, p.CPF, e.CEP, tp.Numero
+FROM Pacientes p
+LEFT JOIN Enderecos e
+ON p.idEndereco = e.id
+LEFT JOIN TelefonesPacientes tp
+ON p.idPaciente = tp.idPaciente
+WHERE p.Nome = 'Felipe'
+
+SELECT * FROM Medicos
+SELECT * FROM MedicosEspecialidades
+SELECT * FROM EspecialidadesMedicas
+
+SELECT m.Nome, m.Sobrenome, e.NomeEspecialidade 
+FROM MedicosEspecialidades me
+INNER JOIN EspecialidadesMedicas e
+ON me.idEspecialidade = e.idEspecialidade
+INNER JOIN Medicos m
+ON me.idMedico = m.idMedico
+--WHERE NomeEspecialidade = 'Pediatra'
+
+SELECT * FROM EspecialidadesMedicas em
+LEFT JOIN MedicosEspecialidades me
+ON em.idEspecialidade = me.idEspecialidade
+LEFT JOIN Medicos m
+ON m.idMedico = me.idMedico
